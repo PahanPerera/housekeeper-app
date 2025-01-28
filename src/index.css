@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "Genos", serif;
+}
+
+body {
+  @apply font-mono bg-amber-50;
+}
