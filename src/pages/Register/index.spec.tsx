@@ -4,7 +4,7 @@ import { Register } from "./index";
 import { userEvent } from "@vitest/browser/context";
 import { getTestContext } from "../../test-utils";
 
-test("renders Register", async () => {
+test("Testing Register", async () => {
   const context = getTestContext();
 
   const { getByText, getByPlaceholder, getByRole } = render(<Register />, {

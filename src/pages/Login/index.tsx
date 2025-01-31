@@ -1,4 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useLogin } from "./useLogin";
+import { useNavigator } from "../../providers/Navigator";
+import { useEffect } from "react";
 
 type LoginForm = {
   name: string;
@@ -8,17 +11,33 @@ type LoginForm = {
 };
 
 export const Login = () => {
+  const { homePage } = useNavigator();
+  const { call: loginUser, value, error } = useLogin();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>();
 
-  const onSubmit: SubmitHandler<LoginForm> = () => {};
+  useEffect(() => {
+    if (value) {
+      homePage();
+    }
+  }, [value]);
+
+  const onSubmit: SubmitHandler<LoginForm> = (data: LoginForm) => {
+    loginUser(data);
+  };
 
   return (
     <section className="container mx-auto p-4 m-8 text-lg">
       <form onSubmit={handleSubmit(onSubmit)}>
+        {error && (
+          <p className="p-2 bg-red-400 rounded text-white mb-2">
+            Error while login
+          </p>
+        )}
         <h1 className="text-2xl">Login</h1>
         <div className=" flex flex-col gap-4 my-4">
           <div className="flex flex-col">

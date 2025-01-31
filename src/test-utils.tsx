@@ -8,6 +8,7 @@ export const getTestContext = () => {
   const mockNavigatorImpl: NavigatorContextType = {
     homePage: vi.fn(),
     registerPage: vi.fn(),
+    loginPage: vi.fn(),
   };
 
   const mockStateImpl: StateContextType = {
@@ -17,6 +18,7 @@ export const getTestContext = () => {
 
   const mockDataImpl: DataContextType = {
     registerUser: vi.fn(),
+    loginUser: vi.fn(),
   };
 
   const TestAppProviders = ({ children }: PropsWithChildren) => {
