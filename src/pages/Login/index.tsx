@@ -1,73 +1,58 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  Anchor,
+  Button,
+  Container,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useLogin } from "./useLogin";
-import { useNavigator } from "../../providers/Navigator";
-import { useEffect } from "react";
 
-type LoginForm = {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-};
+export function Login() {
+  const { call: login } = useLogin();
 
-export const Login = () => {
-  const { homePage } = useNavigator();
-  const { call: loginUser, value, error } = useLogin();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>();
-
-  useEffect(() => {
-    if (value) {
-      homePage();
-    }
-  }, [value]);
-
-  const onSubmit: SubmitHandler<LoginForm> = (data: LoginForm) => {
-    loginUser(data);
-  };
+  const form = useForm({
+    initialValues: {
+      email: "pahan@app.dev",
+      password: "1qaz2wsx",
+    },
+  });
 
   return (
-    <section className="container mx-auto p-4 m-8 text-lg">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {error && (
-          <p className="p-2 bg-red-400 rounded text-white mb-2">
-            Error while login
-          </p>
-        )}
-        <h1 className="text-2xl">Login</h1>
-        <div className=" flex flex-col gap-4 my-4">
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="email"
-              placeholder="email"
-              {...register("email", { required: true })}
-            />
-            <span className="text-red-400">{errors?.email?.type}</span>
-          </div>
+    <Container size={420} my={40}>
+      <Title ta="center">Welcome back!</Title>
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Do not have an account yet?{" "}
+        <Anchor size="sm" component="button">
+          Create account
+        </Anchor>
+      </Text>
 
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="password"
-              placeholder="password"
-              {...register("password", { required: true })}
-            />
-            <span className="text-red-400">{errors?.password?.type}</span>
-          </div>
-
-          <button
-            className="bg-amber-200 p-2 rounded cursor-pointer"
-            type="submit"
-          >
-            Login
-          </button>
-        </div>
+      <form onSubmit={form.onSubmit((values) => login(values))}>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput
+            label="Email"
+            placeholder="john@app.dev"
+            required
+            key={form.key("email")}
+            {...form.getInputProps("email")}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            required
+            key={form.key("password")}
+            {...form.getInputProps("password")}
+            mt="md"
+          />
+          <Button fullWidth mt="xl" type="submit">
+            Sign in
+          </Button>
+        </Paper>
       </form>
-    </section>
+    </Container>
   );
-};
+}

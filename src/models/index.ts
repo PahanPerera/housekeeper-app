@@ -15,3 +15,11 @@ export type User = {
   name: string;
   email: string;
 };
+
+export type Product = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  rating: number;
+};

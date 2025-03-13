@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import { useNavigator } from "../../providers/Navigator";
+import { useSelector } from "../../providers/State";
 
 type NavButtonProps = {
   name: string;
@@ -20,10 +21,13 @@ const NavButton = ({ name, navigate }: NavButtonProps) => {
 export const Root = () => {
   const { registerPage } = useNavigator();
   const { loginPage } = useNavigator();
+  const { user } = useSelector();
   return (
     <>
       <header className="p-4 bg-amber-200 flex justify-center">
-        <h1 className="text-3xl font-semibold">My Personal Assistant</h1>
+        <h1 className="text-3xl font-semibold">
+          My Personal Assistant <span>{user?.email}</span>
+        </h1>
         <span className="flex-1"></span>
         <div className="flex justify-center gap-3">
           <NavButton name="Register" navigate={registerPage} />

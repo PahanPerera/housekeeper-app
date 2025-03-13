@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { AppProviders } from "./providers/App";
 import { Login } from "./pages/Login";
 
+
 export const App = () => {
   return (
     <BrowserRouter>

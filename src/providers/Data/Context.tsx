@@ -1,9 +1,10 @@
 import { createContext, ReactNode, useContext } from "react";
-import { LoginUser, RegisterUser, User } from "../../models";
+import { LoginUser, RegisterUser, Product, User } from "../../models";
 
 export type DataContextType = {
   registerUser: (req: RegisterUser) => Promise<User>;
   loginUser: (req: LoginUser) => Promise<User>;
+  getProducts: () => Promise<Product[]>;
 };
 
 export const DataContext = createContext<DataContextType>({
@@ -11,6 +12,9 @@ export const DataContext = createContext<DataContextType>({
     throw new Error("Not yet implemented");
   },
   loginUser() {
+    throw new Error("Not yet implemented");
+  },
+  getProducts() {
     throw new Error("Not yet implemented");
   },
 });

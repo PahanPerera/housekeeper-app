@@ -11,6 +11,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/core": "^7.17.1",
+    "@mantine/form": "^7.17.1",
+    "@mantine/hooks": "^7.17.1",
     "@tailwindcss/vite": "^4.0.0",
     "@vitest/browser": "^3.0.4",
     "playwright": "^1.50.0",
@@ -34,6 +37,9 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "postcss": "^8.5.3",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"

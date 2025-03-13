@@ -26,5 +26,10 @@ export const pocketBaseImpl: () => DataContextType = () => {
         email: response.record.email,
       };
     },
+    async getProducts() {
+      return fetch("https://dummyjson.com/products/category/sports-accessories")
+        .then((res) => res.json())
+        .then((data) => data.products);
+    },
   };
 };

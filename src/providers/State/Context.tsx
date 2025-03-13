@@ -1,13 +1,25 @@
 import { createContext, ReactNode, useContext } from "react";
 import { User } from "../../models";
 
-export type StateContextType = {
-  user: User | undefined;
+export type State = {
+  user?: User;
+};
+
+export type StateDispatcherContextType = {
   updateUser: (user: User) => void;
 };
 
+export type StateSelectorContextType = {
+  state: State;
+};
+
+export type StateContextType = StateDispatcherContextType &
+  StateSelectorContextType;
+
 export const StateContext = createContext<StateContextType>({
-  user: undefined,
+  state: {
+    user: undefined,
+  },
   updateUser() {
     throw new Error("not yet implemented");
   },
@@ -24,6 +36,14 @@ export const StateProvider = ({ children, value }: StateProviderProps) => {
   );
 };
 
-export const useAppState = (): StateContextType => {
-  return useContext(StateContext);
+export const useDispatcher = (): StateDispatcherContextType => {
+  const { updateUser } = useContext(StateContext);
+  return {
+    updateUser,
+  };
+};
+
+export const useSelector = (): State => {
+  const { state } = useContext(StateContext);
+  return state;
 };

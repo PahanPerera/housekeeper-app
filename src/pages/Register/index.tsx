@@ -1,92 +1,74 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  Anchor,
+  Button,
+  Container,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useRegister } from "./useRegister";
-import { useNavigator } from "../../providers/Navigator";
 
-type RegisterForm = {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-};
+export function Register() {
+  const { call: register } = useRegister();
 
-export const Register = () => {
-  const { call: registerUser, value, error } = useRegister();
-  const { homePage } = useNavigator();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterForm>();
-
-  const onSubmit: SubmitHandler<RegisterForm> = (data: RegisterForm) => {
-    registerUser(data);
-  };
-
-  if (value) {
-    homePage();
-  }
+  const form = useForm({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
+  });
 
   return (
-    <section className="container mx-auto p-4 m-8 text-lg">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {error && (
-          <p className="p-2 bg-red-400 rounded text-white mb-2">
-            Error while registering new user
-          </p>
-        )}
-
-        <h1 className="text-2xl">Register New User</h1>
-        <div className=" flex flex-col gap-4 my-4">
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="name"
-              placeholder="name"
-              {...register("name", { required: true })}
-            />
-            <span className="text-red-400">{errors?.name?.type}</span>
-          </div>
-
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="email"
-              placeholder="email"
-              {...register("email", { required: true })}
-            />
-            <span className="text-red-400">{errors?.email?.type}</span>
-          </div>
-
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="password"
-              placeholder="password"
-              {...register("password", { required: true })}
-            />
-            <span className="text-red-400">{errors?.password?.type}</span>
-          </div>
-
-          <div className="flex flex-col">
-            <input
-              className="p-2 border rounded"
-              type="password"
-              placeholder="confirm password"
-              {...register("passwordConfirm", { required: true })}
-            />
-            <span className="text-red-400">
-              {errors?.passwordConfirm?.type}
-            </span>
-          </div>
-
-          <button
-            className="bg-amber-200 p-2 rounded cursor-pointer"
-            type="submit"
-          >
-            Register
-          </button>
-        </div>
+    <Container size={420} my={30}>
+      <Title ta="center">Welcome!</Title>
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Already have an account?{" "}
+        <Anchor size="sm" component="button">
+          Login
+        </Anchor>
+      </Text>
+      <form onSubmit={form.onSubmit((values) => register(values))}>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput
+            label="Name"
+            placeholder="john"
+            required
+            key={form.key("name")}
+            {...form.getInputProps("name")}
+          />
+          <TextInput
+            label="Email"
+            placeholder="john@app.dev"
+            required
+            key={form.key("email")}
+            {...form.getInputProps("email")}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            required
+            mt="md"
+            key={form.key("password")}
+            {...form.getInputProps("password")}
+          />
+          <PasswordInput
+            label="Confirm Password"
+            placeholder="Confirm Your password"
+            required
+            mt="md"
+            key={form.key("passwordConfirm")}
+            {...form.getInputProps("passwordConfirm")}
+          />
+          <Button fullWidth mt="xl" type="submit">
+            Sign up
+          </Button>
+        </Paper>
       </form>
-    </section>
+    </Container>
   );
-};
+}

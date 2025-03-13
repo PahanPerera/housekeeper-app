@@ -1,10 +1,10 @@
 import { useData } from "../../providers/Data/Context";
-import { useAppState } from "../../providers/State";
 import { useAsyncFn } from "react-use";
+import { useDispatcher } from "../../providers/State";
 
 export const useRegister = () => {
   const { registerUser: registerUserApi } = useData();
-  const { updateUser: updateUserState } = useAppState();
+  const { updateUser: updateUserState } = useDispatcher();
 
   const [state, call] = useAsyncFn(async (req) => {
     const user = await registerUserApi(req);

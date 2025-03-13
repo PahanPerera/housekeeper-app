@@ -1,16 +1,13 @@
 import { useReducer } from "react";
-import { StateContextType } from "./Context";
+import { State, StateContextType } from "./Context";
 import { User } from "../../models";
 
-type State = {
-  user?: User;
-};
-type Action = { type: "UPDATE_USER"; data: User };
+type Action = { type: "user/update"; data: User };
 
 type Reducer<S, A> = (prevState: S, action: A) => S;
 
 const reducer: Reducer<State, Action> = (prevState: State, action: Action) => {
-  if (action.type === "UPDATE_USER") {
+  if (action.type === "user/update") {
     return {
       ...prevState,
       user: action.data,
@@ -22,9 +19,9 @@ const reducer: Reducer<State, Action> = (prevState: State, action: Action) => {
 export const stateImpl: () => StateContextType = () => {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(reducer, {});
   return {
-    user: state.user,
+    state,
     updateUser(user) {
-      dispatch({ type: "UPDATE_USER", data: user });
+      dispatch({ type: "user/update", data: user });
     },
     clearUser() {},
   };
